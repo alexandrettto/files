@@ -191,5 +191,4 @@ cml(seq(0,0.1,by=0.001))
 plot(front$risk,front$return,type="l",xlim=c(0.065,0.1),ylim=c(0,0.02))
 lines(seq(0,0.1,by=0.001),cml(seq(0,0.1,by=0.001)))
 
-#развлекуха или для тех кто хочет стать инвестором))))
-minvariancePortfolio(dt)
+
