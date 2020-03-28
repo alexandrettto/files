@@ -12,7 +12,7 @@ for(i in 2:length(names(dan))){ #выдергиваю имена акций
 }
 ret<-c()
 data<-data.table()
-dan[,YNDX:=NULL] # delete unnecessary shares (zhora must say which)
+dan[,YNDX:=NULL] 
 for(j in 2:dim(dan)[2]){ #calculate returns on shares
   for(i in 2:dim(dan)[1]){
     ret[i-1]<-dan[[names(dan)[j]]][[i]]/dan[[names(dan)[j]]][[i-1]]-1
@@ -30,7 +30,7 @@ ret_SBER<-mean(data$SBER) # variance of gazprom
 var_GAZP<-var(data$GAZP) 
 var_SBER<-var(data$SBER)
 
-wa<-0.5 # веса на самом деле не нужны но в задании есть этот пункт. Мне кажется, что надо прописать просто в предпосылках то, что мы юзаем такой то пакет, где в весах нет надобности ибо он сам все считает. 
+wa<-0.5 
 wb<-1-wa
 cor(subset(data,select = c("GAZP","SBER")))
 ret<-c(ret_GAZP,ret_SBER)
@@ -66,13 +66,12 @@ beta_SBER<-coef(lm(SBER~IMOEX,data = capm))[2]
 mrp<-mean(capm$IMOEX)-rf
 return_SBER_capm<-rf+beta_SBER*mrp
 c(ret_SBER,return_SBER_capm)
-#Отсюда видим, что capm  ниже чем реальный показатель. Если считаем, что capm is true model, тогда сбер недооценен и надо быстренько вкладывать все бабосики в него
-#Но как мы знаем, что сапм говно-модель и лучше этого не делать)0)0))
+#Отсюда видим, что capm  ниже чем реальный показатель.
 
 beta_GAZP<-coef(lm(GAZP~IMOEX,data = capm))[2]
 return_GAZP_capm<-rf+beta_GAZP*mrp
 c(ret_GAZP,return_GAZP_capm)
-#А вот тут уже видим, что capm предсказывает доход побольше. Получается, что акции overpriced и их надо сливать))
+#А вот тут уже видим, что capm предсказывает доход побольше.
 
 capm<-capm[,SBER_P:=SBER-rf]
 capm<-capm[,GAZP_P:=GAZP-rf]
@@ -90,7 +89,7 @@ p_value
 ###ДЛЯ ВСЕХ АКЦИЙ ЧАСТЬ 2
 
 
-#1 НУЖНО ДОПИСАТЬ ВЕСА, до назначать их, опять же по сути нам это не надо, но в задание есть... Я бы положил бы болт и не прописывал ибо это запарно. 
+
 data[,QIWI:=NULL]
 imoex<-data$IMOEX
 data1<-subset(data,select = names(data)[-c(which(names(data)=="IMOEX"),which(names(data)=="Dates"))])
